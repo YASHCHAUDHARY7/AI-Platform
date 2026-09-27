@@ -1,18 +1,18 @@
 import express from "express";
 import dotenv from "dotenv";
-import proxy from "express-http-proxy";
+import connectDb from "./config/db.js";
 dotenv.config();
 
 const port = process.env.PORT
 
 const app = express();
-
-app.use("/auth",proxy(process.env.AUTH_SERVICE))
+app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.json({ message: "Hello from gateway" });
+  res.json({ message: "Hello from auth" });
 });
 app.listen(port, () => {
-  console.log(`gateway started at ${port}`);
+  console.log(`auth started at ${port}`);
+  connectDb();
 });
 
